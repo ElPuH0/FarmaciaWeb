@@ -1,0 +1,69 @@
+@using FarmaciaWeb.Models
+@using Microsoft.AspNetCore.Http
+@model ModelProductoPersona
+
+@{
+    var Logueado=AppHttpContext.Current.Session.GetString("Logueado");
+}
+
+<ul class="navbar-nav">
+@if(PersonaBase.Id>0 && Logueado!=null){
+    @if(PersonaBase.Rol.Equals("Administrador")){
+        <li class="nav-item">
+            @* <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" id="letra">Bienvenido @PersonaBase.Nombre!</a> *@
+            <a class="nav-link" asp-action="Perfil" asp-controller="Persona" title="Manage" id="letra">Bienvenido @PersonaBase.Nombre!</a>
+        </li>
+    }else if(PersonaBase.Rol.Equals("Cliente")){
+        <li class="nav-item">
+            @* <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" id="letra">Bienvenido @PersonaBase.Nombre!</a> *@
+            <a class="nav-link" asp-action="Perfil" asp-controller="Persona" id="letra">Bienvenido @PersonaBase.Nombre!</a>
+        </li>
+    }else{
+    }
+    <li class="nav-item">
+        @* <button class="nav-link btn btn-link" id="btnSubmit" action="/Producto/List">Cerrar Sesión</button> *@
+        @* @Html.ActionLink("Cerrar Sesión", "CerrarSesion", "CerrarSesion", new{@id="letra", @style="text-align: text-center;"}) *@
+            <a class="nav-link" asp-action="CerrarSesion" asp-controller="CerrarSesion" id="letra">Cerrar Sesión</a>
+    </li>
+    Console.WriteLine("(Login) Rol: "+PersonaBase.Rol+" | Cliente: "+PersonaBase.Nombre);
+}else{
+    @* PersonaBase=new PersonaBase(); *@
+    <li class="nav-item">
+        <a class="nav-link" asp-action="IniciarSesion" asp-controller="Acceso" id="letra">Iniciar Sesión</a>
+    </li>
+}
+    <li class="nav-item" id="navegacion" data-toggle="tooltip" data-placement="top" title="Opciones" data-toggle="tooltip">
+        <div class="row btn-group dropleft">
+            <button style="margin: 0; display: inline;" type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="boton">
+                <img class="img_opciones" style="margin: 0; display: inline;"/>
+            </button>
+            <div class="dropdown-menu text-right" id="navegacion">
+                <a class="dropdown-item disabled" href="#" id="letra"><b>Opciones</b></a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" name="tema" id="cambiarTema" checked/>
+                        <label class="form-check-label" for="cambiarTema" id="letra">Tema oscuro</label>
+                    </div>
+                </a>
+                @if(PersonaBase.Id>0 && Logueado!=null){
+                    <a class="dropdown-item">
+                        <a class="nav-link" asp-action="CerrarSesion" asp-controller="CerrarSesion" id="letra">Cerrar Sesión</a>
+                    </a>
+                }
+            </div>
+        </div>
+    </li>
+</ul>
+@* <div>
+    DNI: @TempData["ButtonValue"]
+</div>
+<script>
+    $(document).ready(function() {
+        $("#btnSubmit").click(function(){
+            alert("button");
+            //PersonaBase.Id==0;
+            Console.WriteLine("a");
+        }); 
+    });
+</script> *@

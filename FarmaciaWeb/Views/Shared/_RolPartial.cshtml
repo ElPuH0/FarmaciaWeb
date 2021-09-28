@@ -1,0 +1,23 @@
+@using FarmaciaWeb.Models
+@using Microsoft.AspNetCore.Http
+@model ModelProductoPersona
+
+@{
+    var Logueado=AppHttpContext.Current.Session.GetString("Logueado");
+}
+
+<ul class="navbar-nav">
+@if(PersonaBase.Id>0 && Logueado!=null){
+    @if(PersonaBase.Rol.Equals("Administrador")){
+        <li class="nav-item">
+            <a class="nav-link" asp-action="AdministradorV1" asp-controller="Persona" id="letra">Solo ve el Administrador</a>
+        </li>
+    }else if(PersonaBase.Rol.Equals("Cliente")){
+        <li class="nav-item">
+            <a class="nav-link" asp-action="ClienteV1" asp-controller="Persona" id="letra">Solo ve el Cliente</a>
+        </li>
+    }else{
+    }
+    Console.WriteLine("(Rol) Rol: "+PersonaBase.Rol+" | Cliente: "+PersonaBase.Nombre);
+}else{
+}

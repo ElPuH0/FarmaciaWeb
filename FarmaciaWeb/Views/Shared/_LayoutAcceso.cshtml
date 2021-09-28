@@ -1,0 +1,43 @@
+@{
+    Layout="_Layout";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card login-logout-tab" id="panelAuto">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a href="/Acceso/IniciarSesion" class="nav-link" id="letra">Iniciar Sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Acceso/CrearCuenta" class="nav-link" id="letra">CrearCuenta</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @RenderSection("Scripts", required: false)
+}
+
+<script>
+    $(function(){
+        var current=location.pathname;
+        $('.nav-tabs li a').each(function(){
+            var $this=$(this);
+            if(current.indexOf($this.attr('href'))!==-1){
+                $this.addClass('active');
+            }
+        })
+    })
+</script>

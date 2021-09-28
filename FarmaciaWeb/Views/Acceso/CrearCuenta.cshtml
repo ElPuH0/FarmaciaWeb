@@ -1,0 +1,107 @@
+@model FarmaciaWeb.Models.Persona
+
+@{
+    ViewBag.Title="Indexa";
+    Layout="_LayoutAcceso";
+}
+
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        <section>
+            @* <h4>Crear una nueva cuenta.</h4> *@
+            <hr/>
+            <form action="" method="post" id="frm">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Id" id="letra"></label>
+                            <input asp-for="Id" class="form-control">
+                            <span class="text-danger" asp-validation-for="Id"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Contrasena" id="letra"></label>
+                            <input asp-for="Contrasena" class="form-control">
+                            <span class="text-danger" asp-validation-for="Contrasena"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Nombre" id="letra"></label>
+                            <input asp-for="Nombre" class="form-control">
+                            <span class="text-danger" asp-validation-for="Nombre"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="ApellidoPat" id="letra"></label>
+                            <input asp-for="ApellidoPat" class="form-control">
+                            <span class="text-danger" asp-validation-for="ApellidoPat"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="ApellidoMat" id="letra"></label>
+                            <input asp-for="ApellidoMat" class="form-control">
+                            <span class="text-danger" asp-validation-for="ApellidoMat"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Genero" id="letra"></label>
+                            <input asp-for="Genero" class="form-control">
+                            <span class="text-danger" asp-validation-for="Genero"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Foto" id="letra"></label>
+                            <input asp-for="Foto" class="form-control">
+                            <span class="text-danger" asp-validation-for="Foto"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit" style="margin: auto; display: block;">Crear</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"/>
+    
+    <script>
+        $(document).ready(function(){
+            $("#frm").submit(function(e){
+                e.preventDefault();
+                url="@Url.Content("~/Acceso/IniciarSesionQuery")"
+                parametros=$(this).serialize();
+                $.post(url, parametros, function(data){
+                    if(data=="1"){
+                        Swal.fire(
+                            'Cliente creado con éxito',
+                            'Existen campos vacíos',
+                            'success'
+                        );
+                        alert("retorno del controlador a la vista => C:1=V: "+data);
+                        document.location.href="@Url.Content("/Home/Index")";
+                    }else{
+                        Swal.fire(
+                            'Error',
+                            'Existen campos vacíos',
+                            'error'
+                        );
+                        alert("No retorno del controlador a la vista => C:1=V: "+data);
+                    }
+                })
+            });
+        });
+    </script>
+    
+    <script src="~/lib/sweetalert2/dist/sweetalert2.min.js"></script>
+}
+@* No tiene js así que no hará nada xd(grp) *@
